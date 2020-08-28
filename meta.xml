@@ -1,0 +1,11 @@
+<meta>
+    <script src="config.lua" type="client" cache="false" />
+    <script src="client.lua" type="client" />
+	<file src="assets/background.gif" />
+	<file src="assets/background.png" />
+	<file src="assets/music.mp3" />
+	<file src="assets/chopsic.ttf" />
+	<file src="assets/speedphreak.ttf" />
+	<file src="assets/excluded.ttf" />
+	<file src="assets/corona.ttf" />
+</meta>
