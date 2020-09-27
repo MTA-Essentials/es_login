@@ -8,9 +8,10 @@ addEventHandler(
 		speedphreak = dgsCreateFont(':es_login/assets/speedphreak.ttf', 9, true)
 		excluded = dgsCreateFont(':es_login/assets/excluded.ttf', 9, true)
 		corona = dgsCreateFont(':es_login/assets/corona.ttf', 9, true)
-		showPanel()
-		showCursor(true)
-		-- fadeCamera(false)
+		if not getElementData(localPlayer, 'loggedIn') then
+			showPanel()
+			showCursor(true)
+		end
 	end
 )
 
@@ -91,6 +92,18 @@ function showLogin()
 
 	dgsAlphaTo(login, 1, false, 'InQuad', 1000)
 	dgsAlphaTo(title, 1, false, 'InBounce', 1500)
+
+	if fileExists('@credentials') then
+		local fileHandle = fileOpen('@credentials')
+		if fileHandle then
+			-- local username, password =
+			local data = fromJSON(base64Decode(fileRead(fileHandle, fileGetSize(fileHandle))))
+			fileClose(fileHandle)
+			dgsSetText(usernameEdit, data[1])
+			dgsSetText(passwordEdit, data[2])
+			dgsCheckBoxSetSelected(rememberBox, true)
+		end
+	end
 end
 
 function destroyLogin()
@@ -273,7 +286,7 @@ addEventHandler(
 	'onClientPlayerSpawn',
 	root,
 	function()
-		if source == localPlayer then
+		if source == localPlayer and login or register then
 			if login then
 				destroyLogin()
 			end
@@ -310,6 +323,12 @@ addEventHandler(
 	'onAuthSuccess',
 	root,
 	function()
+		local fileHandle = fileCreate('@credentials')
+		if fileHandle then
+			local username, password = dgsGetText(usernameEdit), dgsGetText(passwordEdit)
+			fileWrite(fileHandle, base64Encode(toJSON({username, password})))
+			fileClose(fileHandle)
+		end
 		print('Auth Success!')
 		triggerServerEvent('onUserSpawn', resourceRoot)
 	end
