@@ -3,7 +3,7 @@ addEventHandler(
 	resourceRoot,
 	function()
 		sx, sy = guiGetScreenSize()
-		loadstring(exports.es_dgs:dgsImportFunction())()
+		loadstring(exports.dgs:dgsImportFunction())()
 		chopsic = dgsCreateFont('assets/chopsic.ttf', 18)
 		speedphreak = dgsCreateFont('assets/speedphreak.ttf', 9, true)
 		excluded = dgsCreateFont('assets/excluded.ttf', 9, true)
