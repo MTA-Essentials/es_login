@@ -23,6 +23,7 @@ function showPanel()
 		gif = dgsCreateMediaBrowser(sx, sy)
 		dgsMediaLoadMedia(gif, 'assets/background.gif', 'IMAGE')
 		background = dgsCreateImage(0, 0, sx, sy, gif, false)
+		dgsAttachToAutoDestroy(gif, background)
 	elseif config.background == 'static' then
 		background = dgsCreateImage(0, 0, sx, sy, 'assets/background.png', false)
 	end
